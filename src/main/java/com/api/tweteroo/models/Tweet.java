@@ -15,16 +15,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Tweet {
 
-    public Tweet(TweetDTO data){
-        this.username = data.username();
-        this.text = data.tweet();
+    public Tweet(TweetDTO data, String username){
+        this.username = username;
+        this.text = data.text();
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(length = 20, nullable = false)
+    @Column(length = 100, nullable = false)
     private String username;
 
     @Column(length = 200, nullable = true)

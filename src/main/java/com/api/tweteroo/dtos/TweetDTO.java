@@ -1,3 +1,3 @@
 package com.api.tweteroo.dtos;
 
-public record TweetDTO(String username, String tweet) {}
+public record TweetDTO(String text) {}

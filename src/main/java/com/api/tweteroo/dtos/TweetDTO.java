@@ -1,3 +1,7 @@
 package com.api.tweteroo.dtos;
 
-public record TweetDTO(String text) {}
+import jakarta.validation.constraints.NotBlank;
+
+public record TweetDTO(
+        @NotBlank String text) {
+}

@@ -24,6 +24,8 @@ import com.api.tweteroo.dtos.TweetDTO;
 import com.api.tweteroo.models.Tweet;
 import com.api.tweteroo.repositories.TweetRepository;
 
+import jakarta.validation.Valid;
+
 @CrossOrigin(origins = "null", maxAge = 3600)
 @RestController
 @RequestMapping("/api/tweets")
@@ -31,21 +33,21 @@ public class TweetsController {
 
     @Autowired
     private TweetRepository tweetRepository;
-    
+
     @PostMapping
-    public ResponseEntity<String> create(@RequestBody TweetDTO text, @RequestHeader("User") String username){
+    public ResponseEntity<String> create(@RequestBody @Valid TweetDTO text, @RequestHeader("User") String username) {
         tweetRepository.save(new Tweet(text, username));
         return ResponseEntity.status(HttpStatus.CREATED).body("OK");
     }
 
     @GetMapping
-    public Page<Tweet> list(@RequestParam(value = "page", defaultValue = "0") int page){
+    public Page<Tweet> list(@RequestParam(value = "page", defaultValue = "0") int page) {
         Pageable pageable = PageRequest.of(page, 5, Sort.by("id").descending());
         return tweetRepository.findAll(pageable);
     }
 
     @GetMapping("/{username}")
-    public List<Tweet> byUser(@PathVariable(value = "username") String username){
+    public List<Tweet> byUser(@PathVariable(value = "username") String username) {
         Tweet tweet = new Tweet();
         tweet.setUsername(username);
         Example<Tweet> tweetExample = Example.of(tweet);
